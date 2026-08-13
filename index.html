@@ -1,139 +1,371 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meka AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meka AI</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1020;
-      color: white;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0d12;
+  color: white;
+  height: 100vh;
+  display: flex;
+}
 
-    header {
-      padding: 18px;
-      text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-      border-bottom: 1px solid #29304a;
-    }
+/* SOL MENÜ */
+.sidebar {
+  width: 270px;
+  background: #11141b;
+  border-right: 1px solid #242936;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+}
 
-    #chat {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-    }
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 22px;
+}
 
-    .message {
-      margin: 12px 0;
-      padding: 12px 16px;
-      border-radius: 15px;
-      max-width: 80%;
-      line-height: 1.4;
-    }
+.new-chat {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #303746;
+  background: #191d26;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+}
 
-    .user {
-      background: #3155ff;
-      margin-left: auto;
-    }
+.new-chat:hover {
+  background: #222733;
+}
 
-    .meka {
-      background: #20283f;
-      margin-right: auto;
-    }
+.chat-list {
+  margin-top: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
 
-    .input-area {
-      display: flex;
-      padding: 12px;
-      gap: 8px;
-      border-top: 1px solid #29304a;
-    }
+.chat-item {
+  padding: 12px;
+  border-radius: 9px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  color: #d9dce3;
+}
 
-    input {
-      flex: 1;
-      padding: 14px;
-      border-radius: 12px;
-      border: none;
-      outline: none;
-      font-size: 16px;
-    }
+.chat-item:hover {
+  background: #1c2029;
+}
 
-    button {
-      padding: 14px 18px;
-      border: none;
-      border-radius: 12px;
-      background: #3155ff;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.settings {
+  padding: 12px;
+  border-top: 1px solid #242936;
+  cursor: pointer;
+  color: #c7cad2;
+}
 
-    button:hover {
-      background: #4667ff;
-    }
-  </style>
+/* ANA ALAN */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  height: 64px;
+  border-bottom: 1px solid #242936;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 30px;
+}
+
+.welcome {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.welcome h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.welcome p {
+  color: #9da3b0;
+  font-size: 17px;
+}
+
+.message {
+  max-width: 760px;
+  margin: 15px auto;
+  padding: 14px 18px;
+  border-radius: 14px;
+  line-height: 1.5;
+}
+
+.user {
+  background: #3155ff;
+}
+
+.meka {
+  background: #181c25;
+  border: 1px solid #272d3a;
+}
+
+/* MESAJ KUTUSU */
+.input-area {
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.input-box {
+  width: min(800px, 95%);
+  display: flex;
+  background: #171a22;
+  border: 1px solid #303746;
+  border-radius: 15px;
+  padding: 6px;
+}
+
+input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 13px;
+  font-size: 16px;
+}
+
+.send {
+  border: none;
+  background: #3155ff;
+  color: white;
+  border-radius: 11px;
+  padding: 0 18px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.send:hover {
+  background: #4667ff;
+}
+
+/* TELEFON / TABLET */
+@media (max-width: 700px) {
+  .sidebar {
+    width: 210px;
+  }
+
+  .welcome h1 {
+    font-size: 30px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <header>🤖 Meka AI</header>
+<div class="sidebar">
+  <div class="logo">Meka AI</div>
 
-  <div id="chat">
-    <div class="message meka">
-      Merhaba! Ben Meka AI 🤖<br>
-      Sana nasıl yardımcı olabilirim?
+  <button class="new-chat" onclick="newChat()">＋ Yeni sohbet</button>
+
+  <div class="chat-list" id="chatList"></div>
+
+  <div class="settings">⚙ Ayarlar</div>
+</div>
+
+<div class="main">
+
+  <div class="topbar" id="chatTitle">
+    Yeni sohbet
+  </div>
+
+  <div class="chat" id="chat">
+
+    <div class="welcome" id="welcome">
+      <div>
+        <h1>Meka AI</h1>
+        <p>Bugün ne hakkında konuşmak istersin?</p>
+      </div>
     </div>
+
   </div>
 
   <div class="input-area">
-    <input id="messageInput" type="text" placeholder="Meka AI'a bir şey sor..." />
-    <button onclick="sendMessage()">Gönder</button>
+    <div class="input-box">
+      <input
+        id="messageInput"
+        type="text"
+        placeholder="Meka AI'a bir mesaj yaz..."
+      >
+      <button class="send" onclick="sendMessage()">Gönder</button>
+    </div>
   </div>
 
-  <script>
-    function sendMessage() {
-      const input = document.getElementById("messageInput");
-      const chat = document.getElementById("chat");
+</div>
 
-      const message = input.value.trim();
+<script>
 
-      if (!message) return;
+let chats = [];
+let currentChat = null;
 
-      chat.innerHTML += `
-        <div class="message user">
-          ${message}
+function newChat() {
+
+  const chat = {
+    id: Date.now(),
+    title: "Yeni sohbet",
+    messages: []
+  };
+
+  chats.push(chat);
+  currentChat = chat.id;
+
+  renderChatList();
+  renderChat();
+}
+
+function renderChatList() {
+
+  const list = document.getElementById("chatList");
+
+  list.innerHTML = "";
+
+  chats.forEach(chat => {
+
+    const item = document.createElement("div");
+
+    item.className = "chat-item";
+    item.textContent = chat.title;
+
+    item.onclick = () => {
+
+      currentChat = chat.id;
+      renderChat();
+
+    };
+
+    list.appendChild(item);
+
+  });
+}
+
+function renderChat() {
+
+  const chatArea = document.getElementById("chat");
+  const title = document.getElementById("chatTitle");
+
+  const selected = chats.find(c => c.id === currentChat);
+
+  if (!selected) return;
+
+  title.textContent = selected.title;
+
+  chatArea.innerHTML = "";
+
+  if (selected.messages.length === 0) {
+
+    chatArea.innerHTML = `
+      <div class="welcome">
+        <div>
+          <h1>Meka AI</h1>
+          <p>Bugün ne hakkında konuşmak istersin?</p>
         </div>
-      `;
+      </div>
+    `;
 
-      input.value = "";
+    return;
+  }
 
-      setTimeout(() => {
-        chat.innerHTML += `
-          <div class="message meka">
-            Mesajını aldım! 🤖
-          </div>
-        `;
+  selected.messages.forEach(message => {
 
-        chat.scrollTop = chat.scrollHeight;
-      }, 500);
+    const div = document.createElement("div");
+
+    div.className = "message " + message.type;
+
+    div.textContent = message.text;
+
+    chatArea.appendChild(div);
+
+  });
+
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function sendMessage() {
+
+  const input = document.getElementById("messageInput");
+
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  if (!currentChat) {
+    newChat();
+  }
+
+  const selected = chats.find(c => c.id === currentChat);
+
+  selected.messages.push({
+    type: "user",
+    text: text
+  });
+
+  if (selected.title === "Yeni sohbet") {
+    selected.title = text.substring(0, 25);
+  }
+
+  input.value = "";
+
+  renderChatList();
+  renderChat();
+
+  setTimeout(() => {
+
+    selected.messages.push({
+      type: "meka",
+      text: "Mesajını aldım! 🤖 Gerçek AI bağlantısını bir sonraki aşamada ekleyeceğiz."
+    });
+
+    renderChat();
+
+  }, 500);
+}
+
+document
+  .getElementById("messageInput")
+  .addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+      sendMessage();
     }
 
-    document.getElementById("messageInput").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        sendMessage();
-      }
-    });
-  </script>
+  });
+
+</script>
 
 </body>
-</html>
+</html>    
