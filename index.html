@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meka AI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b1020;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 18px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      border-bottom: 1px solid #29304a;
+    }
+
+    #chat {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin: 12px 0;
+      padding: 12px 16px;
+      border-radius: 15px;
+      max-width: 80%;
+      line-height: 1.4;
+    }
+
+    .user {
+      background: #3155ff;
+      margin-left: auto;
+    }
+
+    .meka {
+      background: #20283f;
+      margin-right: auto;
+    }
+
+    .input-area {
+      display: flex;
+      padding: 12px;
+      gap: 8px;
+      border-top: 1px solid #29304a;
+    }
+
+    input {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 14px 18px;
+      border: none;
+      border-radius: 12px;
+      background: #3155ff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #4667ff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>🤖 Meka AI</header>
+
+  <div id="chat">
+    <div class="message meka">
+      Merhaba! Ben Meka AI 🤖<br>
+      Sana nasıl yardımcı olabilirim?
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input id="messageInput" type="text" placeholder="Meka AI'a bir şey sor..." />
+    <button onclick="sendMessage()">Gönder</button>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("messageInput");
+      const chat = document.getElementById("chat");
+
+      const message = input.value.trim();
+
+      if (!message) return;
+
+      chat.innerHTML += `
+        <div class="message user">
+          ${message}
+        </div>
+      `;
+
+      input.value = "";
+
+      setTimeout(() => {
+        chat.innerHTML += `
+          <div class="message meka">
+            Mesajını aldım! 🤖
+          </div>
+        `;
+
+        chat.scrollTop = chat.scrollHeight;
+      }, 500);
+    }
+
+    document.getElementById("messageInput").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
+  </script>
+
+</body>
+</html>
